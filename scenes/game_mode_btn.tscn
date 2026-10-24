@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://ck0rtjv46pnd3"]
+
+[ext_resource type="FontFile" uid="uid://bbyjdq5gaaiie" path="res://assets/fonts/figtree-latin-700-normal.ttf" id="1_n3p1s"]
+[ext_resource type="Script" uid="uid://duaddairjbtnb" path="res://scripts/game_mode_btn.gd" id="2_047ju"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gk40"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 4
+
+[node name="GameModeBtn" type="Button" unique_id=649329827]
+custom_minimum_size = Vector2(70, 40)
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_n3p1s")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gk40")
+text = "Default Text"
+script = ExtResource("2_047ju")

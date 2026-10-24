@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ci60ya50nmeru"]
+
+[ext_resource type="Texture2D" uid="uid://d13v8lpo1facj" path="res://assets/icons/hint.svg" id="1_b4wr0"]
+[ext_resource type="FontFile" uid="uid://bbyjdq5gaaiie" path="res://assets/fonts/figtree-latin-700-normal.ttf" id="2_g8v3y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_usqhh"]
+
+[node name="ToolButton" type="PanelContainer" unique_id=67195528]
+offset_right = 53.0
+offset_bottom = 23.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_usqhh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1627502880]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=920205343]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+texture = ExtResource("1_b4wr0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=356625878]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_g8v3y")
+theme_override_font_sizes/font_size = 15
+text = "Hint"
+
+[node name="Button" type="Button" parent="." unique_id=700627765]
+layout_mode = 2
+flat = true

@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bcmofeg3r0grt"]
+
+[ext_resource type="Script" uid="uid://bdsn86bag30sy" path="res://scripts/play_pause_btn.gd" id="1_5gk40"]
+[ext_resource type="Texture2D" uid="uid://cyh5unjyom1sb" path="res://assets/icons/playicon.svg" id="1_d2y2i"]
+[ext_resource type="FontFile" uid="uid://bbyjdq5gaaiie" path="res://assets/fonts/figtree-latin-700-normal.ttf" id="2_cjpav"]
+[ext_resource type="Texture2D" uid="uid://d0aln06jhp8cy" path="res://assets/icons/pauseicon.svg" id="3_cjpav"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hrem8"]
+bg_color = Color(0.7372549, 0.68235296, 0.57254905, 0.5176471)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 4
+
+[node name="PlayPauseBtn" type="Button" unique_id=1946157269]
+custom_minimum_size = Vector2(80, 30)
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_hrem8")
+script = ExtResource("1_5gk40")
+
+[node name="PlayBtn" type="HBoxContainer" parent="." unique_id=1693107885]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="PlayIcon" type="TextureRect" parent="PlayBtn" unique_id=1627027915]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("1_d2y2i")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayLabel" type="Label" parent="PlayBtn" unique_id=848415843]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_cjpav")
+theme_override_font_sizes/font_size = 16
+text = "Play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseBtn" type="HBoxContainer" parent="." unique_id=1038744475]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="PauseIcon" type="TextureRect" parent="PauseBtn" unique_id=49532674]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+texture = ExtResource("3_cjpav")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PauseLabel" type="Label" parent="PauseBtn" unique_id=344971393]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("2_cjpav")
+theme_override_font_sizes/font_size = 16
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1

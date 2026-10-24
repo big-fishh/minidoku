@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://bmunki11xtrc8"]
+
+[ext_resource type="Script" uid="uid://43omxds4bc2p" path="res://scripts/board.gd" id="1_bw3vb"]
+[ext_resource type="PackedScene" uid="uid://bd8efnkbm8lfq" path="res://scenes/cell.tscn" id="2_tx6nw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sq3cn"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tl38e"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+
+[node name="Board" type="PanelContainer" unique_id=1238934379]
+custom_minimum_size = Vector2(400, 400)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.4
+anchor_right = 0.5
+anchor_bottom = 0.4
+offset_left = -157.5
+offset_top = -158.5
+offset_right = 157.5
+offset_bottom = 158.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sq3cn")
+script = ExtResource("1_bw3vb")
+cell_scene = ExtResource("2_tx6nw")
+
+[node name="BoardPadding" type="MarginContainer" parent="." unique_id=1142116335]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Boxes" type="GridContainer" parent="BoardPadding" unique_id=704893409]
+layout_mode = 2
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 3
+columns = 2
+
+[node name="Box1" type="PanelContainer" parent="BoardPadding/Boxes" unique_id=1644520518]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl38e")
+
+[node name="Cells" type="GridContainer" parent="BoardPadding/Boxes/Box1" unique_id=1769249910]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Box2" type="PanelContainer" parent="BoardPadding/Boxes" unique_id=1318010938]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl38e")
+
+[node name="Cells" type="GridContainer" parent="BoardPadding/Boxes/Box2" unique_id=642989367]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Box3" type="PanelContainer" parent="BoardPadding/Boxes" unique_id=1084115164]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl38e")
+
+[node name="Cells" type="GridContainer" parent="BoardPadding/Boxes/Box3" unique_id=331360424]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Box4" type="PanelContainer" parent="BoardPadding/Boxes" unique_id=570789111]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl38e")
+
+[node name="Cells" type="GridContainer" parent="BoardPadding/Boxes/Box4" unique_id=776870192]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Box5" type="PanelContainer" parent="BoardPadding/Boxes" unique_id=1765495564]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl38e")
+
+[node name="Cells" type="GridContainer" parent="BoardPadding/Boxes/Box5" unique_id=1590958130]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3
+
+[node name="Box6" type="PanelContainer" parent="BoardPadding/Boxes" unique_id=634186635]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tl38e")
+
+[node name="Cells" type="GridContainer" parent="BoardPadding/Boxes/Box6" unique_id=714834275]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 3

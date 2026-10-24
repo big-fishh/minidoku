@@ -1,0 +1,200 @@
+[gd_scene format=3 uid="uid://c5mvdunuif6mm"]
+
+[ext_resource type="Script" uid="uid://d4kxifdxxegyk" path="res://scripts/hud.gd" id="1_0m4u7"]
+[ext_resource type="PackedScene" uid="uid://bcmofeg3r0grt" path="res://scenes/play_pause_btn.tscn" id="1_ahhtf"]
+[ext_resource type="PackedScene" uid="uid://ck0rtjv46pnd3" path="res://scenes/game_mode_btn.tscn" id="1_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://d2pp8u7pjnf7a" path="res://assets/icons/sudoku_grid.svg" id="2_uo2fv"]
+[ext_resource type="Texture2D" uid="uid://c5tioxe60uuwb" path="res://assets/icons/open_eye.svg" id="3_6fi6k"]
+[ext_resource type="FontFile" uid="uid://bbyjdq5gaaiie" path="res://assets/fonts/figtree-latin-700-normal.ttf" id="4_uo2fv"]
+[ext_resource type="PackedScene" uid="uid://ci60ya50nmeru" path="res://scenes/tool_button.tscn" id="7_apjy4"]
+[ext_resource type="PackedScene" uid="uid://c3nvqcqgygh86" path="res://scenes/special_tool_button.tscn" id="9_0i1j5"]
+[ext_resource type="PackedScene" uid="uid://csg5fctjii8m5" path="res://scenes/keypad_button.tscn" id="10_eld54"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oo0fn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0m4u7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_apjy4"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1138007447]
+script = ExtResource("1_0m4u7")
+
+[node name="TopMarginContainer" type="MarginContainer" parent="." unique_id=1772527883]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 15
+
+[node name="TopUI" type="HBoxContainer" parent="TopMarginContainer" unique_id=220830261]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="GameModesContainer" type="HBoxContainer" parent="TopMarginContainer/TopUI" unique_id=1204492459]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="DailyChallengeBtn" parent="TopMarginContainer/TopUI/GameModesContainer" unique_id=649329827 instance=ExtResource("1_oo0fn")]
+custom_maximum_size = Vector2(140, 40)
+layout_mode = 2
+text = "Daily Challenge"
+
+[node name="UnlimitedBtn" parent="TopMarginContainer/TopUI/GameModesContainer" unique_id=747662235 instance=ExtResource("1_oo0fn")]
+custom_maximum_size = Vector2(140, 40)
+layout_mode = 2
+text = "Unlimited
+"
+is_on = false
+
+[node name="Control" type="Control" parent="TopMarginContainer/TopUI" unique_id=183851045]
+layout_mode = 2
+
+[node name="InfoBtnsContainer" type="HBoxContainer" parent="TopMarginContainer/TopUI" unique_id=1985924651]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="IconAndPuzzle" type="HBoxContainer" parent="TopMarginContainer/TopUI/InfoBtnsContainer" unique_id=937665367]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="SudokuIcon" type="TextureRect" parent="TopMarginContainer/TopUI/InfoBtnsContainer/IconAndPuzzle" unique_id=1732751284]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_uo2fv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PuzzleNoLabel" type="Label" parent="TopMarginContainer/TopUI/InfoBtnsContainer/IconAndPuzzle" unique_id=1611379731]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("4_uo2fv")
+text = "#42"
+
+[node name="RightGroup" type="HBoxContainer" parent="TopMarginContainer/TopUI/InfoBtnsContainer" unique_id=2014874753]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 6
+
+[node name="PlayPauseBtn" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup" unique_id=1946157269 instance=ExtResource("1_ahhtf")]
+custom_maximum_size = Vector2(-1, 40)
+layout_mode = 2
+
+[node name="TimerGroup" type="HBoxContainer" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup" unique_id=557399615]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ViewTimerBtn" type="Button" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup/TimerGroup" unique_id=701761928]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/icon_max_width = 21
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oo0fn")
+icon = ExtResource("3_6fi6k")
+flat = true
+icon_alignment = 1
+
+[node name="Timer" type="Label" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup/TimerGroup" unique_id=1597709716]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("4_uo2fv")
+text = "0:00"
+
+[node name="BottomMarginContainer" type="MarginContainer" parent="." unique_id=1854080470]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 35
+
+[node name="BottomUI" type="VBoxContainer" parent="BottomMarginContainer" unique_id=106635998]
+layout_mode = 2
+theme_override_constants/separation = 27
+
+[node name="tools" type="HBoxContainer" parent="BottomMarginContainer/BottomUI" unique_id=1992331514]
+layout_mode = 2
+theme_override_constants/separation = 83
+alignment = 1
+
+[node name="HintButton" parent="BottomMarginContainer/BottomUI/tools" unique_id=67195528 instance=ExtResource("7_apjy4")]
+layout_mode = 2
+
+[node name="EraseButton" parent="BottomMarginContainer/BottomUI/tools" unique_id=1861795736 instance=ExtResource("7_apjy4")]
+layout_mode = 2
+
+[node name="NotesButton" parent="BottomMarginContainer/BottomUI/tools" unique_id=1471389365 instance=ExtResource("7_apjy4")]
+layout_mode = 2
+
+[node name="keypadAndTools" type="HBoxContainer" parent="BottomMarginContainer/BottomUI" unique_id=1238317976]
+layout_mode = 2
+theme_override_constants/separation = 33
+alignment = 1
+
+[node name="keypad" type="GridContainer" parent="BottomMarginContainer/BottomUI/keypadAndTools" unique_id=907984182]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 7
+columns = 3
+
+[node name="KeypadButton" parent="BottomMarginContainer/BottomUI/keypadAndTools/keypad" unique_id=547199769 instance=ExtResource("10_eld54")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m4u7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_apjy4")
+
+[node name="KeypadButton2" parent="BottomMarginContainer/BottomUI/keypadAndTools/keypad" unique_id=1161928977 instance=ExtResource("10_eld54")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m4u7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_apjy4")
+text = "2"
+
+[node name="KeypadButton3" parent="BottomMarginContainer/BottomUI/keypadAndTools/keypad" unique_id=350810661 instance=ExtResource("10_eld54")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m4u7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_apjy4")
+text = "3"
+
+[node name="KeypadButton4" parent="BottomMarginContainer/BottomUI/keypadAndTools/keypad" unique_id=1446464071 instance=ExtResource("10_eld54")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m4u7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_apjy4")
+text = "4"
+
+[node name="KeypadButton5" parent="BottomMarginContainer/BottomUI/keypadAndTools/keypad" unique_id=1550434332 instance=ExtResource("10_eld54")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m4u7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_apjy4")
+text = "5"
+
+[node name="KeypadButton6" parent="BottomMarginContainer/BottomUI/keypadAndTools/keypad" unique_id=1323472671 instance=ExtResource("10_eld54")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0m4u7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_apjy4")
+text = "6"
+
+[node name="tools" type="VBoxContainer" parent="BottomMarginContainer/BottomUI/keypadAndTools" unique_id=999702166]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 22
+
+[node name="UndoButton" parent="BottomMarginContainer/BottomUI/keypadAndTools/tools" unique_id=1719861785 instance=ExtResource("9_0i1j5")]
+layout_mode = 2
+
+[node name="ResetButton" parent="BottomMarginContainer/BottomUI/keypadAndTools/tools" unique_id=535926041 instance=ExtResource("9_0i1j5")]
+layout_mode = 2

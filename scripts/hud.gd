@@ -17,6 +17,7 @@ const FONT_COLOR := Color("#2B2B2B")
 signal number_entered(value: int)
 signal number_erased()
 signal board_reset()
+signal notes_toggled()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -94,6 +95,9 @@ func _ready() -> void:
 	var reset_button: Button = $BottomMarginContainer/BottomUI/keypadAndTools/tools/ResetButton/Button
 	reset_button.pressed.connect(_reset_board)
 	
+	var notes_button: Button = $BottomMarginContainer/BottomUI/tools/NotesButton/Button
+	notes_button.pressed.connect(_toggle_notes)
+	
 ## User Input Functions
 func _accept_puzzle_entry(value: String) -> void:
 	number_entered.emit(int(value))
@@ -103,6 +107,9 @@ func _erase_puzzle_entry() -> void:
 	
 func _reset_board() -> void:
 	board_reset.emit()
+
+func _toggle_notes() -> void:
+	notes_toggled.emit()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -11,6 +11,7 @@ func _ready() -> void:
 	hud.number_entered.connect(game_board.mark_cell)
 	hud.number_erased.connect(game_board.erase_cell)
 	hud.board_reset.connect(game_board.reset_board)
+	hud.notes_toggled.connect(game_board.toggle_notes)
 	
 
 func download_game_resource() -> void:

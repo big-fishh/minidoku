@@ -31,6 +31,7 @@ func show_value(n: int, is_given: bool, has_conflict: bool, label_color: Color) 
 func show_notes(mask: int) -> void:
 	for i in 6:
 		var note: Label = $CellNotes.get_child(i)
+		note.add_theme_font_override("font", NOTE_FONT)
 		if mask & (1 << i):
 			note.text = str(i + 1) # since everything is 0 based indexing
 		else:

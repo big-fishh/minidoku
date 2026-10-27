@@ -27,7 +27,9 @@ var board: Array[Cell] = [] # Stores all the cells as a 1D array for faster acce
 var givens := PackedByteArray()
 var solution := PackedByteArray()
 var board_state := PackedByteArray() # Data representation of game board
+var notes := PackedByteArray()
 var user_selected_cell := -1
+var notes_on := false
 
 ###### INITIALIZE BOARD SCENE ########
 func _ready() -> void:
@@ -84,6 +86,10 @@ func setup_game(puzzle: Dictionary[String, String]) -> void:
 	for i in board_size:
 		var val := int(puzzle.solution[i])
 		solution[i] = val
+	
+	notes.resize(N * N)
+	for i in board_size:
+		notes[i] = 0
 		
 	for i in board_state.size():
 		board_state[i] = givens[i]
@@ -95,14 +101,24 @@ func setup_game(puzzle: Dictionary[String, String]) -> void:
 func _select_cell(n: int) -> void:
 	# A toggle for selecting a cell
 	user_selected_cell = n if user_selected_cell != n else -1
-	# print(user_selected_cell)
 	_update_board()
 
 func mark_cell(val: int) -> void:
 	if user_selected_cell == -1 or _is_given(user_selected_cell):
 		return
-	board_state[user_selected_cell] = val
+	if notes_on:
+		board_state[user_selected_cell] = 0
+		var notes_mask = notes[user_selected_cell]
+		notes[user_selected_cell] = notes_mask ^ (1 << val-1)
+	else:
+		notes[user_selected_cell] = 0
+		board_state[user_selected_cell] = val
+	# snapshot
 	_update_board()
+
+func toggle_notes() -> void:
+	notes_on = not notes_on
+		
 
 func erase_cell() -> void:
 	if user_selected_cell == -1 or _is_given(user_selected_cell):
@@ -166,6 +182,7 @@ func _update_board() -> void:
 			elif _are_match(selected_value, board_state[i]):
 				cell_bg_color = MATCH_BG
 		cell.show_value(board_state[i], _is_given(i), _has_conflict(i), SELECTED_ENTRY_COLOR if is_selected else cell.DEFAULT_ENTRY_COLOR)
+		cell.show_notes(notes[i])
 		cell.set_bg_color(cell_bg_color)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

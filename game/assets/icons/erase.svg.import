@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b04g35e65wko1"
-path="res://.godot/imported/erase.svg-910c92f0eb8930348585074c18825551.ctex"
+path="res://.godot/imported/erase.svg-f6869b34d70af650be578bdb84cd6318.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/icons/erase.svg"
-dest_files=["res://.godot/imported/erase.svg-910c92f0eb8930348585074c18825551.ctex"]
+source_file="res://assets/icons/erase.svg"
+dest_files=["res://.godot/imported/erase.svg-f6869b34d70af650be578bdb84cd6318.ctex"]
 
 [params]
 

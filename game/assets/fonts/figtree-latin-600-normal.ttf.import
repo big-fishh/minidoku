@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dwupfr7gco34d"
-path="res://.godot/imported/figtree-latin-600-normal.ttf-d4c38fdc11e575531b34981674e7da93.fontdata"
+path="res://.godot/imported/figtree-latin-600-normal.ttf-7eea88f40523bcf4d8a66af1dd3cbc91.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/figtree-latin-600-normal.ttf"
-dest_files=["res://.godot/imported/figtree-latin-600-normal.ttf-d4c38fdc11e575531b34981674e7da93.fontdata"]
+source_file="res://game/assets/fonts/figtree-latin-600-normal.ttf"
+dest_files=["res://.godot/imported/figtree-latin-600-normal.ttf-7eea88f40523bcf4d8a66af1dd3cbc91.fontdata"]
 
 [params]
 

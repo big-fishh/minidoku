@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d13v8lpo1facj"
-path="res://.godot/imported/hint.svg-09be05db205280133c72bc607537967b.ctex"
+uid="uid://s1s72qbvb77i"
+path="res://.godot/imported/reset.svg-5edb038962ac02b39a41599528c95562.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/hint.svg"
-dest_files=["res://.godot/imported/hint.svg-09be05db205280133c72bc607537967b.ctex"]
+source_file="res://game/assets/icons/reset.svg"
+dest_files=["res://.godot/imported/reset.svg-5edb038962ac02b39a41599528c95562.ctex"]
 
 [params]
 

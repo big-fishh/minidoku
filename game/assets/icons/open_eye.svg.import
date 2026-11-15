@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b04g35e65wko1"
-path="res://.godot/imported/erase.svg-f6869b34d70af650be578bdb84cd6318.ctex"
+uid="uid://c5tioxe60uuwb"
+path="res://.godot/imported/open_eye.svg-8c129867115f256f48d8a803dfb58430.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/erase.svg"
-dest_files=["res://.godot/imported/erase.svg-f6869b34d70af650be578bdb84cd6318.ctex"]
+source_file="res://game/assets/icons/open_eye.svg"
+dest_files=["res://.godot/imported/open_eye.svg-8c129867115f256f48d8a803dfb58430.ctex"]
 
 [params]
 

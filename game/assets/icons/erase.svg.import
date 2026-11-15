@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwhgnm2e1fcuf"
-path="res://.godot/imported/pwa_icon_180.png-1e4218a21639200d27c9f5d550dcbf80.ctex"
+uid="uid://b04g35e65wko1"
+path="res://.godot/imported/erase.svg-910c92f0eb8930348585074c18825551.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/pwa_icon_180.png"
-dest_files=["res://.godot/imported/pwa_icon_180.png-1e4218a21639200d27c9f5d550dcbf80.ctex"]
+source_file="res://game/assets/icons/erase.svg"
+dest_files=["res://.godot/imported/erase.svg-910c92f0eb8930348585074c18825551.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

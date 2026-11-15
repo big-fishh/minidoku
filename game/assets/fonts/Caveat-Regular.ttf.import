@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cfl0vqvmav6uo"
-path="res://.godot/imported/figtree-latin-500-normal.ttf-67103b5cdf8b64aea5921612940c5fae.fontdata"
+uid="uid://hlojd3fuq8lh"
+path="res://.godot/imported/Caveat-Regular.ttf-a07929585f9d83ddf5516351d5750a7b.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/figtree-latin-500-normal.ttf"
-dest_files=["res://.godot/imported/figtree-latin-500-normal.ttf-67103b5cdf8b64aea5921612940c5fae.fontdata"]
+source_file="res://game/assets/fonts/Caveat-Regular.ttf"
+dest_files=["res://.godot/imported/Caveat-Regular.ttf-a07929585f9d83ddf5516351d5750a7b.fontdata"]
 
 [params]
 

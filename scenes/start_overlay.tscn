@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ckp0m8xk5tq6i"]
+
+[ext_resource type="Script" uid="uid://dqhrixbkcldoq" path="res://scripts/start_overlay.gd" id="1_d3e3r"]
+
+[node name="StartOverlay" type="PanelContainer" unique_id=818785897]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_d3e3r")
+board_padding = 4
+frame_color = Color(0.16862746, 0.16862746, 0.16862746, 1)

@@ -1,56 +1,72 @@
 extends Node
 
-@onready var game_board := $Board
+const PUZZLE_SERVER_URL := "http://127.0.0.1:8000/"
+
+@onready var game_board := $BoardStack/Board
+@onready var start_overlay := $BoardStack/StartOverlay
 @onready var hud := $HUD
 @onready var http_request = $ResourceDownloader
+var current_mode = GameMode.Mode.DAILY
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# http_request.request_completed.connect(_on_resource_downloaded)
-	# download_game_resource()
+	http_request.request_completed.connect(_on_puzzle_downloaded)
+	download_puzzle()
+
 	hud.number_entered.connect(game_board.mark_cell)
 	hud.number_erased.connect(game_board.erase_cell)
 	hud.board_reset.connect(game_board.reset_board)
 	hud.notes_toggled.connect(game_board.toggle_notes)
-	
+	hud.mode_requested.connect(_on_mode_requested)
+	hud.show_mode(current_mode)
+	hud.undo_pressed.connect(game_board.undo)
+	start_overlay.start_pressed.connect(_on_start_pressed)
+	game_board.puzzle_solved.connect(_on_puzzle_solved)
+	game_board.puzzle_solved.connect(hud.stop_clock)
 
-func download_game_resource() -> void:
-	var url = "http://127.0.0.1:8000/"
-	var error = http_request.request(url)
+# The player pressed START GAME. The overlay has already hidden itself,
+# so the board (filled by setup_game) is now visible; just start the clock.
+func _on_start_pressed() -> void:
+	hud.start_clock()
+
+func _on_puzzle_solved() -> void:
+	print("Solved!")
+
+func _on_mode_requested(mode: GameMode.Mode) -> void:
+	if mode == current_mode:
+		return
+	current_mode = mode
+	hud.show_mode(current_mode)
+
+
+####### PUZZLE DOWNLOAD ########
+func download_puzzle() -> void:
+	var error = http_request.request(PUZZLE_SERVER_URL)
 	if error != OK:
-		print("An error occurred while initiating the HTTP request.")
+		print("Couldn't start the puzzle request. Error code: ", error)
+		_use_backup_puzzle()
 
-func _on_resource_downloaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	if hud.has_method("show_loading_screen"):
-		hud.show_loading_screen(false)
-
+# Runs when the server answers (or the request fails).
+func _on_puzzle_downloaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
-		print("Failed to download resource.")
+		print("Puzzle download failed. Result: ", result, ", HTTP code: ", response_code)
+		_use_backup_puzzle()
 		return
 
-	# Example: Parse an image payload downloaded over HTTP
-	var json_string = body.get_string_from_utf8()
-	var json = JSON.new()
-	var error = json.parse(json_string)
-	
-	if error == OK:
-		var server_data = json.get_data()
-		
-		# Ensure the dictionary contains the expected keys
-		if server_data is Dictionary and server_data.has("puzzle") and server_data.has("solution"):
-			var puzzle_givens = server_data["puzzle"]
-			var puzzle_solution = server_data["solution"]
-			
-			print("Successfully loaded puzzle: ", puzzle_givens)
-			
-			# Pass the data along to your game board scene/script
-			if game_board.has_method("setup_normal_game"):
-				game_board.setup_normal_game(puzzle_givens, puzzle_solution)
-		else:
-			print("JSON data was valid, but missing 'puzzle' or 'solution' keys.")
-	else:
-		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+	var server_data = JSON.parse_string(body.get_string_from_utf8())
+	if not (server_data is Dictionary and server_data.has("puzzle") and server_data.has("solution")):
+		print("Server sent unexpected data: ", server_data)
+		_use_backup_puzzle()
+		return
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	# Rename the server's keys to the ones the board expects.
+	var puzzle: Dictionary[String, String] = {
+		"grid": str(server_data["puzzle"]),
+		"solution": str(server_data["solution"]),
+	}
+	game_board.setup_game(puzzle)
+
+# If the server can't be reached, play the puzzle built into board.gd, so
+# pressing Start always reveals something.
+func _use_backup_puzzle() -> void:
+	game_board.setup_game(game_board.game)

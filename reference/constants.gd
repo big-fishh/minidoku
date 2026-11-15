@@ -2,7 +2,6 @@
 var thin_line := Color("#a9a9a9")
 var thick_line := Color("#5c5c5c")
 var given_color := Color("#1f1f1f")
-var entry_color := Color("#347f41")
 var error_color := Color("#d23f3f")
 var note_color := Color("#6f6f6f")
 

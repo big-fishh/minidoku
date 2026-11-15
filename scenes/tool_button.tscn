@@ -2,8 +2,21 @@
 
 [ext_resource type="Texture2D" uid="uid://d13v8lpo1facj" path="res://assets/icons/hint.svg" id="1_b4wr0"]
 [ext_resource type="FontFile" uid="uid://bbyjdq5gaaiie" path="res://assets/fonts/figtree-latin-700-normal.ttf" id="2_g8v3y"]
+[ext_resource type="FontFile" uid="uid://cfl0vqvmav6uo" path="res://assets/fonts/figtree-latin-500-normal.ttf" id="3_n2bgn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_usqhh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_usqhh"]
+content_margin_left = 3.0
+content_margin_top = 0.0
+content_margin_right = 3.0
+content_margin_bottom = 0.0
+bg_color = Color(0.2627451, 0.3882353, 0.09411765, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [node name="ToolButton" type="PanelContainer" unique_id=67195528]
 offset_right = 53.0
@@ -30,3 +43,22 @@ text = "Hint"
 [node name="Button" type="Button" parent="." unique_id=700627765]
 layout_mode = 2
 flat = true
+
+[node name="Badge" type="PanelContainer" parent="Button" unique_id=1153514834]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.844
+anchor_right = 0.844
+offset_left = -34.0
+offset_top = -1.0
+offset_right = -11.0
+offset_bottom = 11.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_usqhh")
+
+[node name="Label" type="Label" parent="Button/Badge" unique_id=667339610]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_n2bgn")
+theme_override_font_sizes/font_size = 8
+text = "ON"
+horizontal_alignment = 1

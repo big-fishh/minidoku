@@ -1,7 +1,9 @@
 extends PanelContainer
 # The Board is responsible keeping track of what's on it (its state) as well as enforcing the rules of the game
 
-@export var cell_scene: PackedScene # Lets us instantiate a cell scene
+# The scene each board cell is made from. The default means this works even if
+# the Inspector value ever gets cleared.
+@export var cell_scene: PackedScene = preload("res://scenes/cell.tscn")
 # CONSTANTS
 const N := 6
 const BOX_HEIGHT := 2
@@ -30,6 +32,14 @@ var board_state := PackedByteArray() # Data representation of game board
 var notes := PackedByteArray()
 var user_selected_cell := -1
 var notes_on := false
+
+signal puzzle_solved
+var history: Array[Dictionary] = []
+
+# Win wave: the next cell's tile starts WIN_WAVE_STEP seconds after the
+# previous one, so several tiles are fading at once and it rolls across the board.
+# (Each tile's own fade timings live in cell.gd.)
+const WIN_WAVE_STEP := 0.05
 
 ###### INITIALIZE BOARD SCENE ########
 func _ready() -> void:
@@ -69,8 +79,8 @@ func _ready() -> void:
 			# Last step is to connect the cell node's pressed signal to a function that will do something when a cell is selected. .bind() lets us pass the cell index to the function
 			cell.pressed.connect(_select_cell.bind(cell_index))
 			
-	### REMOVE LATER
-	setup_game(game)
+	# The puzzle comes from the server: main.gd calls setup_game when it arrives.
+	# Until then the cells just sit empty (the StartOverlay covers them anyway).
 
 func setup_game(puzzle: Dictionary[String, String]) -> void:
 	# store the puzzle grid as the givens array and the puzzle solution array with what was taken from main,
@@ -93,9 +103,10 @@ func setup_game(puzzle: Dictionary[String, String]) -> void:
 		
 	for i in board_state.size():
 		board_state[i] = givens[i]
-		
+	
+	history.clear()
 	_update_board()
-		
+
 
 ####### HANDLE USER INPUT #############
 func _select_cell(n: int) -> void:
@@ -106,6 +117,7 @@ func _select_cell(n: int) -> void:
 func mark_cell(val: int) -> void:
 	if user_selected_cell == -1 or _is_given(user_selected_cell):
 		return
+	_save_history()
 	if notes_on:
 		board_state[user_selected_cell] = 0
 		var notes_mask = notes[user_selected_cell]
@@ -113,20 +125,20 @@ func mark_cell(val: int) -> void:
 	else:
 		notes[user_selected_cell] = 0
 		board_state[user_selected_cell] = val
-	# snapshot
-	_update_board()
+	_check_for_win()   # also refreshes the board
 
 func toggle_notes() -> void:
 	notes_on = not notes_on
-		
 
 func erase_cell() -> void:
 	if user_selected_cell == -1 or _is_given(user_selected_cell):
 		return
+	_save_history()
 	board_state[user_selected_cell] = 0
 	_update_board()
 
 func reset_board() -> void:
+	_save_history()
 	for i in board_state.size():
 		board_state[i] = givens[i]
 	_update_board()
@@ -168,12 +180,46 @@ func _are_match(val_1: int, val_2: int) -> bool:
 	else:
 		return false
 
+func snapshot() -> Dictionary:
+	return {"values": board_state.duplicate(), "notes": notes.duplicate()}
+
+func restore(state: Dictionary) -> void:
+	board_state = state["values"].duplicate()
+	notes = state["notes"].duplicate()
+	_update_board()
+
+func undo() -> void:
+	if history.is_empty():
+		return
+	restore(history.pop_back())
+
+func _save_history() -> void:
+	history.append(snapshot())
+
+func _check_for_win() -> void:
+	_update_board()
+	if is_solved():
+		play_win_wave()
+		puzzle_solved.emit()
+
+# Rolling wave across the board: left to right, top to bottom.
+# board[] is already in reading order (row by row), so the index works as the
+# position in the wave.
+func play_win_wave() -> void:
+	for cell_index in board.size():
+		var start_delay := cell_index * WIN_WAVE_STEP
+		board[cell_index].play_win_tile(board_state[cell_index], ENTRY_COLOR, start_delay)
+
+func is_solved() -> bool:
+	return board_state == solution
+
 func _update_board() -> void:
 	var selected_value := board_state[user_selected_cell]
 	for i in board.size():
 		var is_selected := i == user_selected_cell
 		var cell := board[i]
 		var cell_bg_color := cell.DEFAULT_BG
+		var fade := false
 		if user_selected_cell >= 0:
 			if i == user_selected_cell:
 				cell_bg_color = SELECTED_BG
@@ -181,9 +227,13 @@ func _update_board() -> void:
 				cell_bg_color = PEER_BG
 			elif _are_match(selected_value, board_state[i]):
 				cell_bg_color = MATCH_BG
+				fade = true
 		cell.show_value(board_state[i], _is_given(i), _has_conflict(i), SELECTED_ENTRY_COLOR if is_selected else cell.DEFAULT_ENTRY_COLOR)
 		cell.show_notes(notes[i])
-		cell.set_bg_color(cell_bg_color)
+		if fade:
+			cell.fade_bg_color(cell_bg_color)
+		else:
+			cell.set_bg_color(cell_bg_color)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

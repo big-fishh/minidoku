@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://d4kxifdxxegyk" path="res://scripts/hud.gd" id="1_0m4u7"]
 [ext_resource type="PackedScene" uid="uid://bcmofeg3r0grt" path="res://scenes/play_pause_btn.tscn" id="1_ahhtf"]
 [ext_resource type="PackedScene" uid="uid://ck0rtjv46pnd3" path="res://scenes/game_mode_btn.tscn" id="1_oo0fn"]
-[ext_resource type="Texture2D" uid="uid://d2pp8u7pjnf7a" path="res://assets/icons/sudoku_grid.svg" id="2_uo2fv"]
 [ext_resource type="Texture2D" uid="uid://c5tioxe60uuwb" path="res://assets/icons/open_eye.svg" id="3_6fi6k"]
 [ext_resource type="FontFile" uid="uid://bbyjdq5gaaiie" path="res://assets/fonts/figtree-latin-700-normal.ttf" id="4_uo2fv"]
 [ext_resource type="PackedScene" uid="uid://ci60ya50nmeru" path="res://scenes/tool_button.tscn" id="7_apjy4"]
@@ -46,39 +45,28 @@ custom_maximum_size = Vector2(140, 40)
 layout_mode = 2
 text = "Unlimited
 "
-is_on = false
 
 [node name="Control" type="Control" parent="TopMarginContainer/TopUI" unique_id=183851045]
 layout_mode = 2
 
 [node name="InfoBtnsContainer" type="HBoxContainer" parent="TopMarginContainer/TopUI" unique_id=1985924651]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = 8
-
-[node name="IconAndPuzzle" type="HBoxContainer" parent="TopMarginContainer/TopUI/InfoBtnsContainer" unique_id=937665367]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="SudokuIcon" type="TextureRect" parent="TopMarginContainer/TopUI/InfoBtnsContainer/IconAndPuzzle" unique_id=1732751284]
-custom_minimum_size = Vector2(25, 25)
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("2_uo2fv")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="PuzzleNoLabel" type="Label" parent="TopMarginContainer/TopUI/InfoBtnsContainer/IconAndPuzzle" unique_id=1611379731]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
-theme_override_fonts/font = ExtResource("4_uo2fv")
-text = "#42"
 
 [node name="RightGroup" type="HBoxContainer" parent="TopMarginContainer/TopUI/InfoBtnsContainer" unique_id=2014874753]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 6
+
+[node name="Control" type="Control" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup" unique_id=1526374988]
+layout_mode = 2
+
+[node name="PuzzleNoLabel" type="Label" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup" unique_id=1611379731]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+theme_override_fonts/font = ExtResource("4_uo2fv")
+text = "#42"
 
 [node name="PlayPauseBtn" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup" unique_id=1946157269 instance=ExtResource("1_ahhtf")]
 custom_maximum_size = Vector2(-1, 40)
@@ -98,11 +86,13 @@ icon = ExtResource("3_6fi6k")
 flat = true
 icon_alignment = 1
 
-[node name="Timer" type="Label" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup/TimerGroup" unique_id=1597709716]
+[node name="Time" type="Label" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup/TimerGroup" unique_id=1597709716]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
 theme_override_fonts/font = ExtResource("4_uo2fv")
 text = "0:00"
+
+[node name="Timer" type="Timer" parent="TopMarginContainer/TopUI/InfoBtnsContainer/RightGroup/TimerGroup" unique_id=1148034405]
 
 [node name="BottomMarginContainer" type="MarginContainer" parent="." unique_id=1854080470]
 anchors_preset = 12

@@ -68,5 +68,6 @@ func _on_puzzle_downloaded(result: int, response_code: int, headers: PackedStrin
 
 # If the server can't be reached, play the puzzle built into board.gd, so
 # pressing Start always reveals something.
+# TODO: Remove it: if a failed download should really look like a failure, replace the three _use_backup_puzzle() calls with something that shows an error message on the overlay, such as “Couldn’t load today’s puzzle”. You may also want to disable the Start button, because right now Start would reveal an empty board.
 func _use_backup_puzzle() -> void:
 	game_board.setup_game(game_board.game)

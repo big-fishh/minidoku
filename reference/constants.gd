@@ -1,6 +1,6 @@
 
-var thin_line := Color("#a9a9a9")
-var thick_line := Color("#5c5c5c")
+var alt_black1 := Color("#a9a9a9")
+var alt_black2 := Color("#5c5c5c")
 var given_color := Color("#1f1f1f")
 var error_color := Color("#d23f3f")
 var note_color := Color("#6f6f6f")
@@ -9,9 +9,6 @@ Game Background: #f1ede5
 Board frame and thick box lines: #2B2B2B
 Solid black cell in the icons (F–J): #111111
 Digits and frame in the icons: #2B2B2B
-
-Color(""), Color(""), Color(""), Color(""),
-	Color(""), Color(""), Color(""),
 
 Green Board
 #568503 Entry color

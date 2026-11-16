@@ -46,6 +46,10 @@ Decided 2026-11-14.
 30 easy
 Need 105 puzzles
 
+Actually, I think the only rule I want is that Monday and Tuesday are always easy puzzles. I want to be able to mix mediums and hards every week
+
+Don't need to store puzzles ahead of time at all. Can just generate a new seed and then use that to generate puzzle. can have other logic that chooses what the difficulty will be based on the 2 easy, 2 hard, 3 medium constraint. difficulty will be passed, seed will be generated, seed and date will be saved, puzzle will be generated and served.
+
 ## Steps
 
 1. **Store the schedule:** a list of date → puzzle number pairs. Each date can have only one puzzle, and each puzzle can be used only once.
@@ -71,3 +75,4 @@ Need 105 puzzles
 
 
 https://www.freecodecamp.org/news/work-with-sqlite-in-python-handbook/
+https://playbackpress.com/books/sqlbook

@@ -8,6 +8,7 @@ CREATE_PUZZLES_TABLE = '''
 				id INTEGER PRIMARY KEY,
 				date TEXT UNIQUE,
 				seed INTEGER,
+				grid TEXT NOT NULL UNIQUE,
 				difficulty TEXT NOT NULL CHECK (difficulty in ('easy', 'medium', 'hard'))
 			);
 			'''

@@ -68,7 +68,6 @@ def make_puzzle(difficulty, seed):
 
 def get_difficulty(day: date) -> float:
     bag = ["medium", "medium", "medium", "hard", "hard"]
-    #today = date.today()
     iso = date.isocalendar(day)
     if iso.weekday < 3:
         return LEVELS["easy"]
@@ -88,33 +87,44 @@ def get_seed(rng: random.Random) -> int:
                 seed = rng.randrange(2**32)
     return seed
 
-def generate_puzzle() -> tuple[str, str]:
+def generate_daily_puzzle(rng: random.Random, day: date) -> tuple[str, str]:
     # One seeded RNG hands out a fresh seed for every attempt. py-sudoku's
     # default seed is fixed at import time, so passing our own is required.
-    rng = random.Random(BASE_SEED)
-    today = date.today()
-    datestr = date.isoformat(today)
-    difficulty = get_difficulty(today)
-    result = None
-    seed = 0
-    while result is None:
-        seed = get_seed(rng)
-        result =  make_puzzle(difficulty=difficulty, seed=seed)
-
+    datestr = date.isoformat(day)
+    difficulty = get_difficulty(day)
     difficulty_str = next((k for k, v in LEVELS.items() if v == difficulty), None)
     insert_query = '''
-    INSERT INTO Puzzles (date, seed, difficulty) 
-    VALUES (?, ?, ?);
+    INSERT INTO Puzzles (date, seed, difficulty, grid)
+    VALUES (?, ?, ?, ?);
     '''
-    puzzle_data = (datestr, seed, difficulty_str)
     with closing(sqlite3.connect(DB_PATH)) as conn:
+        # Keep trying seeds until we get a unique-solution puzzle whose
+        # board hasn't been served before.
+        while True:
+            seed = get_seed(rng)
+            result = make_puzzle(difficulty=difficulty, seed=seed)
+            if result is None:
+                continue
+            seen = conn.execute("SELECT 1 FROM Puzzles WHERE grid = ?;", (result[0],)).fetchone()
+            if seen is None:
+                break
+
         with conn:
-            conn.execute(insert_query, puzzle_data)
-            conn.commit()
+            conn.execute(insert_query, (datestr, seed, difficulty_str, result[0]))
     return result
 
+def generate_unlimited_puzzle() -> tuple[str, str]:
+    rng = random.Random()
+    difficulty = rng.choice(list(LEVELS.values())) 
+    result = None
+    while result is None:
+        result = make_puzzle(difficulty=difficulty, seed=rng.randrange(2**32))
+    return result
+
+
 def main() -> None:
-    generate_puzzle()
+    rng = random.Random(BASE_SEED)
+    today = date.today()
 
 if __name__ == "__main__":
     main()

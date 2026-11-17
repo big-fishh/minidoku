@@ -1,15 +1,14 @@
 import sqlite3
 from pathlib import Path
 from contextlib import closing
+from data.db import DB_PATH
 
-DB_PATH = Path(__file__).resolve().parent / "minidoku.db"
 CREATE_PUZZLES_TABLE = '''
 			CREATE TABLE IF NOT EXISTS Puzzles (
 				id INTEGER PRIMARY KEY,
 				date TEXT UNIQUE,
-				difficulty TEXT NOT NULL CHECK (difficulty in ('easy', 'medium', 'hard')),
-				grid TEXT NOT NULL,
-				solution TEXT NOT NULL
+				seed INTEGER,
+				difficulty TEXT NOT NULL CHECK (difficulty in ('easy', 'medium', 'hard'))
 			);
 			'''
 
@@ -18,6 +17,7 @@ def main():
 		with conn:
 			# log database ready message
 			conn.execute(CREATE_PUZZLES_TABLE)
+			conn.commit()
 
 if __name__ == "__main__":
 	main()

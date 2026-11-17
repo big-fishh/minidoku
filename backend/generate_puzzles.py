@@ -11,18 +11,19 @@ Usage:
 
 import json
 import random
+import sqlite3
+from datetime import date
+from contextlib import closing
 
 from sudoku import Sudoku
+from data.db import DB_PATH
 
-PUZZLES_PER_LEVEL = 30
-LEVELS = {"Easy": 0.4, "Medium": 0.5, "Hard": 0.6}  # fraction of cells blanked
+LEVELS = {"easy": 0.4, "medium": 0.5, "hard": 0.6}  # fraction of cells blanked
 BASE_SEED = 2026  # change this to get a different set of puzzles
-OUTPUT_FILE = "puzzles.json"
 
 BOX_WIDTH = 3   # columns per box
 BOX_HEIGHT = 2  # rows per box
 SIZE = 6
-
 
 def units():
     """Every row, column and box as a list of string indices (0-35)."""
@@ -65,35 +66,55 @@ def make_puzzle(difficulty, seed):
     return grid, solution
 
 
-def main():
+def get_difficulty(day: date) -> float:
+    bag = ["medium", "medium", "medium", "hard", "hard"]
+    #today = date.today()
+    iso = date.isocalendar(day)
+    if iso.weekday < 3:
+        return LEVELS["easy"]
+    else:
+        difficulty_seed = f"{iso.year}-W{iso.week}"
+        difficulty_rng = random.Random(difficulty_seed)
+        difficulty_rng.shuffle(bag)
+        return LEVELS[bag[iso.weekday - 3]]
+
+def get_seed(rng: random.Random) -> int:
+    seed = rng.randrange(2**32)
+    # check that seed not in table
+    with closing(sqlite3.connect(DB_PATH)) as conn:
+        with conn:
+            puzzle_seeds = [row[0] for row in conn.execute("SELECT seed FROM Puzzles;")]
+            while seed in puzzle_seeds:
+                seed = rng.randrange(2**32)
+    return seed
+
+def generate_puzzle() -> tuple[str, str]:
     # One seeded RNG hands out a fresh seed for every attempt. py-sudoku's
     # default seed is fixed at import time, so passing our own is required.
     rng = random.Random(BASE_SEED)
-    puzzles = []
-    seen = set()
+    today = date.today()
+    datestr = date.isoformat(today)
+    difficulty = get_difficulty(today)
+    result = None
+    seed = 0
+    while result is None:
+        seed = get_seed(rng)
+        result =  make_puzzle(difficulty=difficulty, seed=seed)
 
-    for level, difficulty in LEVELS.items():
-        found = attempts = 0
-        while found < PUZZLES_PER_LEVEL:
-            attempts += 1
-            result = make_puzzle(difficulty, rng.randrange(2**32))
-            if result is None or result[0] in seen:
-                continue
-            grid, solution = result
-            seen.add(grid)
-            puzzles.append({
-                "id": len(puzzles) + 1,
-                "difficulty": level,
-                "grid": grid,
-                "solution": solution,
-            })
-            found += 1
-        print(f"{level}: kept {found} of {attempts} attempts")
+    difficulty_str = next((k for k, v in LEVELS.items() if v == difficulty), None)
+    insert_query = '''
+    INSERT INTO Puzzles (date, seed, difficulty) 
+    VALUES (?, ?, ?);
+    '''
+    puzzle_data = (datestr, seed, difficulty_str)
+    with closing(sqlite3.connect(DB_PATH)) as conn:
+        with conn:
+            conn.execute(insert_query, puzzle_data)
+            conn.commit()
+    return result
 
-    with open(OUTPUT_FILE, "w") as f:
-        json.dump(puzzles, f, indent=2)
-    print(f"Wrote {len(puzzles)} puzzles to {OUTPUT_FILE}")
-
+def main() -> None:
+    generate_puzzle()
 
 if __name__ == "__main__":
     main()

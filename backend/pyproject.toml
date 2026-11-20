@@ -3,6 +3,7 @@ name = "mini-sudoku"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "dokusan>=0.1.0",
     "faker>=40.54.0",
     "fastapi[standard]>=0.143.0",
     "pandas>=3.1.1",
